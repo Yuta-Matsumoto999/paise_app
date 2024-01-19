@@ -28,6 +28,9 @@
 <b>auto_route</b></br>
 [https://pub.dev/packages/auto_route](https://pub.dev/packages/auto_route)</br>
 
+<b>auto_route_generator</b></br>
+[https://pub.dev/packages/auto_route_generator](https://pub.dev/packages/auto_route_generator)</br>
+
 <b>build_runner</b></br>
 [https://pub.dev/packages/build_runner](https://pub.dev/packages/build_runner)</br>
 
