@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:praise_app_flutter/core/constants/custom_color.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:praise_app_flutter/ui/view/router/app_router.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       routerConfig: appRouter.config(),
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(CustomColor.mainColor)),
         useMaterial3: true,
       ),
     );
