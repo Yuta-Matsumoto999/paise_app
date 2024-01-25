@@ -11,6 +11,7 @@ class AuthTextForm extends ConsumerWidget {
   final bool isPassword;
   final TextEditingController formController;
   final AutoDisposeStateProvider<String> formErrorProvider;
+  final bool formActive;
   final List<Validator> validators;
   const AuthTextForm({
     Key? key,
@@ -19,6 +20,7 @@ class AuthTextForm extends ConsumerWidget {
     required this.isPassword,
     required this.formController,
     required this.formErrorProvider,
+    required this.formActive,
     required this.validators
   }) : super(key: key);
 
@@ -26,7 +28,6 @@ class AuthTextForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final error = ref.watch(formErrorProvider);
     final passwordIsHidden = ref.watch(hidePassword);
-    final formEditAvailable = ref.watch(isFormEdit);
 
     Size size = MediaQuery.of(context).size;
     return Container(
@@ -67,7 +68,7 @@ class AuthTextForm extends ConsumerWidget {
                   var result = _validate(value);
                   ref.read(formErrorProvider.notifier).state = result.first;
                 },
-                enabled: formEditAvailable,
+                enabled: formActive,
                 obscureText: isPassword ? passwordIsHidden : false,
               ),
             ),

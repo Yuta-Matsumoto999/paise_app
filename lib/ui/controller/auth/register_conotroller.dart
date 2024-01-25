@@ -15,8 +15,15 @@ final registerNameErrorMessage = StateProvider.autoDispose<String>((ref) => '');
 final registerEmailErrorMessage = StateProvider.autoDispose<String>((ref) => '');
 final registerPasswordErrorMessage = StateProvider.autoDispose<String>((ref) => '');
 
+// button
+final registerButtonActive = StateProvider.autoDispose<bool>((ref) => true);
+final registerButtonLoading = StateProvider.autoDispose<bool>((ref) => false);
+
+// form
+final registerFormActive = StateProvider.autoDispose<bool>((ref) => true);
+
 // register実行
-final registerExecuteProvider = StateNotifierProvider<RegisterExecuteNotifier, AsyncValue<IsAuthState>>(
+final registerExecuteProvider = StateNotifierProvider.autoDispose<RegisterExecuteNotifier, AsyncValue<IsAuthState>>(
   (ref) => RegisterExecuteNotifier(
     registerAccountUsecase: ref.read(registerAccountUsecaseProvider),
     ref: ref
