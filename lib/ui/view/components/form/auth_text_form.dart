@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:praise_app_flutter/core/constants/custom_color.dart';
-import 'package:praise_app_flutter/ui/controller/form_controller.dart';
+import 'package:praise_app_flutter/ui/controller/password_form_controller.dart';
 import 'package:praise_app_flutter/ui/view/validation/execute_validation.dart';
 import 'package:praise_app_flutter/ui/view/validation/validator.dart';
 
