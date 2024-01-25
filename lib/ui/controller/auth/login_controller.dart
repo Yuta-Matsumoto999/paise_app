@@ -1,6 +1,9 @@
 // error message
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:praise_app_flutter/core/constants/message_ja.dart';
+import 'package:praise_app_flutter/core/exception/auth/form_Is_valid_exception.dart';
+import 'package:praise_app_flutter/domain/usecase/auth/login_account_usecase.dart';
 import 'package:praise_app_flutter/ui/state/auth/is_auth_state.dart';
 import 'package:praise_app_flutter/ui/view/validation/execute_validation.dart';
 import 'package:praise_app_flutter/ui/view/validation/validator/email_validator.dart';
@@ -21,19 +24,39 @@ final loginFormActive = StateProvider.autoDispose<bool>((ref) => true);
 
 // login実行
 final loginExecuteProvider = StateNotifierProvider.autoDispose<LoginExecuteNotifier, AsyncValue<IsAuthState>>(
-  (ref) => LoginExecuteNotifier(ref: ref));
+  (ref) => LoginExecuteNotifier(
+    ref: ref,
+    loginAccountUsecase: ref.read(loginAccountUsecaseProvider)
+  )
+);
 
 class LoginExecuteNotifier extends StateNotifier<AsyncValue<IsAuthState>> {
   final Ref ref;
+  final LoginAccountUsecase _loginAccountUsecase;
 
   LoginExecuteNotifier({
-    required this.ref
-  }) :super(const AsyncLoading());
+    required this.ref,
+    required LoginAccountUsecase loginAccountUsecase
+  }) : _loginAccountUsecase = loginAccountUsecase,
+  super(const AsyncLoading());
 
   final TextEditingController loginEmailController = TextEditingController();
   final TextEditingController loginPasswordController = TextEditingController();
 
-  // TODO: ここにログインの実装
+  Future<void> login() async {
+    var email = loginEmailController.text;
+    var password = loginPasswordController.text;
+
+    final isValid = await validate(email, password, ref);
+    if(isValid) {
+      state = await AsyncValue.guard(() async {
+        final res = await _loginAccountUsecase.execute(email, password);
+        return IsAuthState.fromEntity(res);
+      });
+    } else {
+      state = AsyncValue.error(FormIsValidException(MessageJa.authInValidValue), StackTrace.fromString(MessageJa.authInValidValue));
+    }
+  }
 
 
   Future<bool> validate(email, password, ref) async {

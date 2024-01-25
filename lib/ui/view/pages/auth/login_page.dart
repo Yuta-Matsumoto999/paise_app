@@ -97,7 +97,7 @@ class LoginPage extends ConsumerWidget {
                     label: "email", 
                     hintText: "email",
                     isPassword: false, 
-                    formController: ref.read(loginExecuteProvider.notifier).loginEmailController, 
+                    formController: ref.watch(loginExecuteProvider.notifier).loginEmailController, 
                     formErrorProvider: loginEmailErrorMessage,
                     formActive: ref.watch(loginFormActive),
                     validators: [
@@ -109,7 +109,7 @@ class LoginPage extends ConsumerWidget {
                     label: "password",
                     hintText: "password",
                     isPassword: true, 
-                    formController: ref.read(loginExecuteProvider.notifier).loginPasswordController, 
+                    formController: ref.watch(loginExecuteProvider.notifier).loginPasswordController, 
                     formErrorProvider: loginPasswordErrorMessage,
                     formActive: ref.watch(loginFormActive),
                     validators: [
@@ -189,7 +189,7 @@ class LoginPage extends ConsumerWidget {
   }
 
   Future<void> _login(WidgetRef ref, BuildContext context) async {
-    // await ref.read(loginExecuteProvider.notifier).login();
+    await ref.read(loginExecuteProvider.notifier).login();
     final loginProvider = ref.watch(loginExecuteProvider);
 
     loginProvider.when(
