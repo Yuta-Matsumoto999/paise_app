@@ -1,9 +1,9 @@
 import 'package:praise_app_flutter/core/constants/message_ja.dart';
 
-class AuthErrorException implements Exception {
+class RegisterErrorException implements Exception {
   final String? statusCode;
 
-  AuthErrorException(
+  RegisterErrorException(
     this.statusCode
   );
 

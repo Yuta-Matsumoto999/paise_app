@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:praise_app_flutter/core/exception/auth/auth_error_exception.dart';
+import 'package:praise_app_flutter/core/exception/auth/register_error_exception.dart';
 import 'package:praise_app_flutter/core/exception/network_error_exception.dart';
 import 'package:praise_app_flutter/infrastructure/datasource/auth/register_account_datesource.dart';
 import 'package:praise_app_flutter/infrastructure/model/auth/auth_response_model.dart';
@@ -23,7 +23,7 @@ class RegisterAccountDatasourceImpl implements RegisterAccountDatasource {
 
       return AuthResponseModel.fromResponse(true, null);
     } on AuthException catch (e) {
-      throw AuthErrorException(e.statusCode);
+      throw RegisterErrorException(e.statusCode);
     } on SocketException catch (e) {
       throw NetworkErrorException();
     } on TimeoutException catch (e) {
