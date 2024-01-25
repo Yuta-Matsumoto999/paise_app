@@ -3,8 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:praise_app_flutter/core/constants/custom_color.dart';
 import 'package:praise_app_flutter/ui/controller/auth/register_conotroller.dart';
-import 'package:praise_app_flutter/ui/controller/botton_controller.dart';
-import 'package:praise_app_flutter/ui/controller/form_controller.dart';
 import 'package:praise_app_flutter/ui/view/components/button/google_auth_button.dart';
 import 'package:praise_app_flutter/ui/view/components/button/rounded_button.dart';
 import 'package:praise_app_flutter/ui/view/components/form/auth_text_form.dart';
@@ -23,7 +21,7 @@ class RegisterPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,8 +98,9 @@ class RegisterPage extends ConsumerWidget {
                     label: "name", 
                     hintText: "name",
                     isPassword: false, 
-                    formController: ref.read(registerExecuteProvider.notifier).nameController, 
-                    formErrorProvider: registerNameErrorMessage, 
+                    formController: ref.watch(registerExecuteProvider.notifier).registerNameController, 
+                    formErrorProvider: registerNameErrorMessage,
+                    formActive: ref.watch(registerFormActive),
                     validators: [
                       RequiredValidator()
                     ]
@@ -110,8 +109,9 @@ class RegisterPage extends ConsumerWidget {
                     label: "email", 
                     hintText: "email",
                     isPassword: false, 
-                    formController: ref.read(registerExecuteProvider.notifier).emailController, 
-                    formErrorProvider: registerEmailErrorMessage, 
+                    formController: ref.watch(registerExecuteProvider.notifier).registerEmailController, 
+                    formErrorProvider: registerEmailErrorMessage,
+                    formActive: ref.watch(registerFormActive),
                     validators: [
                       RequiredValidator(),
                       EmailValidator()
@@ -121,8 +121,9 @@ class RegisterPage extends ConsumerWidget {
                     label: "password",
                     hintText: "password",
                     isPassword: true, 
-                    formController: ref.read(registerExecuteProvider.notifier).passwordController, 
-                    formErrorProvider: registerPasswordErrorMessage, 
+                    formController: ref.watch(registerExecuteProvider.notifier).registerPasswordController, 
+                    formErrorProvider: registerPasswordErrorMessage,
+                    formActive: ref.watch(registerFormActive),
                     validators: [
                       RequiredValidator(),
                       MinValidator(6),
@@ -133,6 +134,8 @@ class RegisterPage extends ConsumerWidget {
                     text: "Sign Up", 
                     textColor: CustomColor.authButtonText, 
                     backgroundColor: CustomColor.mainColor,
+                    buttonActive: ref.watch(registerButtonActive),
+                    buttonLoading: ref.watch(registerButtonLoading),
                     onPressed: (ref, context) => _register(ref, context)
                   )
                 ]
@@ -182,21 +185,23 @@ class RegisterPage extends ConsumerWidget {
 
     registerProvider.when(
       data: (data) {
-        ref.read(isFormEdit.notifier).state = true;
-        ref.read(isButtonActive.notifier).state = true;
-        ref.read(isButtonLoading.notifier).state = false;
+        ref.read(registerFormActive.notifier).state = true;
+        ref.read(registerButtonActive.notifier).state = true;
+        ref.read(registerButtonLoading.notifier).state = false;
         if(data.isAuth == true) {
           AutoRouter.of(context).pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
         }
       },
       error: (error, stack) {
-        ref.read(isFormEdit.notifier).state = true;
-        ref.read(isButtonActive.notifier).state = true;
-        ref.read(isButtonLoading.notifier).state = false;
+        ref.read(registerFormActive.notifier).state = true;
+        ref.read(registerButtonActive.notifier).state = true;
+        ref.read(registerButtonLoading.notifier).state = false;
         _showErrorSnackBar(context, error.toString());
       },
       loading: () {
-        // 
+        ref.read(registerFormActive.notifier).state = false;
+        ref.read(registerButtonActive.notifier).state = false;
+        ref.read(registerButtonLoading.notifier).state = true;
       }
     );
   }

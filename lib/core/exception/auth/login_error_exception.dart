@@ -1,9 +1,9 @@
 import 'package:praise_app_flutter/core/constants/message_ja.dart';
 
-class AuthErrorException implements Exception {
+class LoginErrorException {
   final String? statusCode;
 
-  AuthErrorException(
+  LoginErrorException(
     this.statusCode
   );
 
@@ -13,7 +13,7 @@ class AuthErrorException implements Exception {
       case '500':
         return MessageJa.internalServerError;
       case '400':
-        return MessageJa.authAccountAlreadyExists;
+        return MessageJa.authLoginInValid;
       case '422':
         return MessageJa.authInValidValue;
       default:

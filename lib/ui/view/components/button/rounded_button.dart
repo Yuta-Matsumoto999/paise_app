@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:praise_app_flutter/ui/controller/botton_controller.dart';
-import 'package:praise_app_flutter/ui/controller/form_controller.dart';
 
 class RoundedButton extends ConsumerWidget {
   final String text;
   final int textColor;
   final int backgroundColor;
+  final bool buttonActive;
+  final bool buttonLoading;
   final Future<void>Function(WidgetRef, BuildContext)? onPressed;
 
   const RoundedButton({
@@ -14,14 +14,13 @@ class RoundedButton extends ConsumerWidget {
     required this.text,
     required this.textColor,
     required this.backgroundColor,
+    required this.buttonActive,
+    required this.buttonLoading,
     this.onPressed
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final buttonActive = ref.watch(isButtonActive);
-    final isLoading = ref.watch(isButtonLoading);
-    
+  Widget build(BuildContext context, WidgetRef ref) {    
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -39,15 +38,11 @@ class RoundedButton extends ConsumerWidget {
               splashFactory: NoSplash.splashFactory,
             ),
             onPressed: buttonActive ? () => {
-              ref.read(isFormEdit.notifier).state = false,
-              ref.read(isButtonActive.notifier).state = false,
-              ref.read(isButtonLoading.notifier).state = true,
-              
               onPressed!(ref, context)
               // _register(ref, context)
             } : null,
             child: (() {
-              if(!isLoading) {
+              if(!buttonLoading) {
                 return Text(
                   text,
                   style: TextStyle(
