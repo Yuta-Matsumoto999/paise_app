@@ -98,7 +98,7 @@ class RegisterPage extends ConsumerWidget {
                     label: "name", 
                     hintText: "name",
                     isPassword: false, 
-                    formController: ref.read(registerExecuteProvider.notifier).nameController, 
+                    formController: ref.watch(registerExecuteProvider.notifier).registerNameController, 
                     formErrorProvider: registerNameErrorMessage,
                     formActive: ref.watch(registerFormActive),
                     validators: [
@@ -109,7 +109,7 @@ class RegisterPage extends ConsumerWidget {
                     label: "email", 
                     hintText: "email",
                     isPassword: false, 
-                    formController: ref.read(registerExecuteProvider.notifier).emailController, 
+                    formController: ref.watch(registerExecuteProvider.notifier).registerEmailController, 
                     formErrorProvider: registerEmailErrorMessage,
                     formActive: ref.watch(registerFormActive),
                     validators: [
@@ -121,7 +121,7 @@ class RegisterPage extends ConsumerWidget {
                     label: "password",
                     hintText: "password",
                     isPassword: true, 
-                    formController: ref.read(registerExecuteProvider.notifier).passwordController, 
+                    formController: ref.watch(registerExecuteProvider.notifier).registerPasswordController, 
                     formErrorProvider: registerPasswordErrorMessage,
                     formActive: ref.watch(registerFormActive),
                     validators: [

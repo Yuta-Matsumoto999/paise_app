@@ -40,15 +40,15 @@ class RegisterExecuteNotifier extends StateNotifier<AsyncValue<IsAuthState>> {
   }) : _registerAccountUsecase = registerAccountUsecase,
   super(const AsyncLoading());
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController registerNameController = TextEditingController();
+  final TextEditingController registerEmailController = TextEditingController();
+  final TextEditingController registerPasswordController = TextEditingController();
 
   Future<void> register() async {
-    var name = nameController.text;
-    var email = emailController.text;
-    var password = passwordController.text;
-
+    var name = registerNameController.text;
+    var email = registerEmailController.text;
+    var password = registerPasswordController.text;
+    
     final isValid = await validate(name, email, password, ref);
     if(isValid) {
       state = await AsyncValue.guard(() async {
