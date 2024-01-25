@@ -20,8 +20,6 @@ class LoginAccountDatasourceImpl implements LoginAccountDatasource {
 
       return AuthResponseModel.fromResponse(true, null);
     } on AuthException catch (e) {
-      print(e.statusCode);
-      print(e.message);
       throw LoginErrorException(e.statusCode);
     } on SocketException catch (e) {
       throw NetworkErrorException();
