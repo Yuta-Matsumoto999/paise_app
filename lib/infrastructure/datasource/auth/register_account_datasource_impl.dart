@@ -16,8 +16,7 @@ class RegisterAccountDatasourceImpl implements RegisterAccountDatasource {
         email: email,
         password: password,
         data: {
-          "full_name": name,
-          "role": "general"
+          "full_name": name
         }
       );
 
