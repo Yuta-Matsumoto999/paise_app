@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:praise_app_flutter/core/exception/auth/login_error_exception.dart';
-import 'package:praise_app_flutter/core/exception/auth/register_error_exception.dart';
 import 'package:praise_app_flutter/core/exception/network_error_exception.dart';
 import 'package:praise_app_flutter/infrastructure/datasource/auth/login_account_datasource.dart';
 import 'package:praise_app_flutter/infrastructure/model/auth/auth_response_model.dart';
